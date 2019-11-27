@@ -9,9 +9,9 @@
 **`public class XXX`和`class XXX`声明类的区别：**
 
 -  如果一个类声明为public class，则文件名称必须和类名称一致，而且在一个类文件里只能有一个public class。如果使用class 声明一个类则文件名可以与类名称不一致，但是在执行时，必须执行生成的class文件名称。
--   除此之外，public class 和class还在包的访问上有所限制，如果一个类只在本包中访问不需要被外包访问，则直接声明成class即可，而如果一个类需要被外包访问则必须声明为public class。
--   ![image-20191101155304103](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101155304103.png)
--   ![image-20191101155334920](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101155334920.png)
+-  除此之外，public class 和class还在包的访问上有所限制，如果一个类只在本包中访问不需要被外包访问，则直接声明成class即可，而如果一个类需要被外包访问则必须声明为public class。
+-  ![image-20191101155304103](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101155304103.png)
+-  ![image-20191101155334920](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101155334920.png)
 
 **字符类型：**
 
@@ -142,6 +142,7 @@ public static void main(String[] args)  {
     public static String test(){
         return "返回";
     }
+
 ```
 
 ![image-20191031221127965](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191031221127965.png)
@@ -157,8 +158,9 @@ public static void main(String[] args)  {
   **引用在类中使用需注意：**
 
   - 其中，要注意的地方就是引用类型的成员变量的初始化问题,它不能直接在构造函数里初始化，必须用到初始化列表，且形参也必须是引用类型。
+
 - 凡是有引用类型的成员变量的类，不能有缺少构造函数。原因是**引用类型的成员变量必须在类构造时进行初始化。**
-  
+
   - 如果两个类要对第三个类的数据进行共享处理，可以考虑把第三个类作为这两个类的引用类型的成员变量
 
 ### 对象引用及对象赋值
@@ -175,6 +177,7 @@ public static void main(String[] args)  {
              int mpg;
 
         }
+
 ```
 
  有了这个模板，就可以用它来创建对象：
@@ -257,6 +260,7 @@ arr=new int[100];//分配内存给数组
 
 方式二：
 int[] arr =null;
+
 ```
 
 **数据空间的堆栈解释**
@@ -302,6 +306,7 @@ int[] arr =null;
             System.out.print(temp[i]+" ");
         }
     }
+
 ```
 
 ![image-20191031222725134](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191031222725134.png)
@@ -320,6 +325,7 @@ public static void sort(int temp[]){
             }
         }
     }
+
 ```
 
 **以6，3，8，2，9，1为例**
@@ -378,6 +384,7 @@ class Teacher extends Peopel {
     }
 }
 
+
 ```
 
 ```java
@@ -390,6 +397,7 @@ class Teacher extends Peopel {
 //输出
 //我是老师
 //我是学生
+
 ```
 
 也可以是
@@ -403,6 +411,7 @@ class Teacher extends Peopel {
         //向下转型后才能调用子类中定义的方法
         ((Student) student).does();
     }
+
 ```
 
  这就是向上转型，`Peopel teacher=new Teacher()`;将子类对象Teacher转化为父类对象`Peopel`。这个时候`Peopel`这个引用调用的方法是子类方法。 
@@ -415,6 +424,7 @@ class Teacher extends Peopel {
 ```java
 Teacher T = (Teacher)new Peopel();
         T.show();
+
 ```
 
 ![image-20191102110054998](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191102110054998.png)
@@ -431,6 +441,7 @@ Teacher T = (Teacher)new Peopel();
         System.out.println(p1);
         System.out.println(p2);
     }
+
 ```
 
 ![image-20191101163543475](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101163543475.png)
@@ -458,6 +469,7 @@ Teacher T = (Teacher)new Peopel();
  eat(new Cat());
  eat(new Dog());
  //......
+
 ```
 
 问题：
@@ -477,6 +489,7 @@ Teacher T = (Teacher)new Peopel();
  eat(new Cat());
  eat(new Dog());
  //.....
+
 ```
 
  这个时候，如果我又有一种新的动物加进来，我只需要实现它自己的类，让他继承Animal就可以了，而不需要为它单独写一个eat方法。提高了扩展性 
@@ -509,6 +522,7 @@ eat(new Cat());
 eat(new Dog());
 eat(new Animal());
 //.....
+
 ```
 
 **多态实例分析**
@@ -544,6 +558,7 @@ eat(new Animal());
 27 //结果
 28 //child and child
 29 //only parent
+
 ```
 
 Child继承了Parent，覆盖了Parent中的show（Child c)方法，但是没有覆盖show（）方法。
@@ -561,6 +576,7 @@ Child继承了Parent，覆盖了Parent中的show（Child c)方法，但是没有
 ```java 
                    //匿名对象
 System.out.println(new Person("刘坤龙",20).toString());
+
 ```
 
 ![image-20191101164121889](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101164121889.png)
@@ -575,6 +591,7 @@ String str2=new String("hello");
 String str3=str2;
 System.out.println(str1==str2);
 System.out.println(str2==str3);
+
 ```
 
 ![image-20191101164513388](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101164513388.png)
@@ -588,12 +605,14 @@ System.out.println(str2==str3);
 ```java
 //可以直接调用类的方法
 System.out.println("hello".length());
+
 ```
 
 如果使用new关键字的话无论如何都会再开辟一个新的空间
 
 ```java
 String str2=new String("hello");
+
 ```
 
 此时空间里的内容还是hello，这个代码相当于是开辟了两个内存空间，而真正使用的是用new关键字开辟出的空间，另一个是垃圾空间
@@ -624,6 +643,7 @@ public String substring(int beginIndex, int endIndex)
 参数
 beginIndex -- 起始索引（包括）, 索引从 0 开始。
 endIndex -- 结束索引（不包括）
+
 ```
 
 实例
@@ -640,6 +660,7 @@ public class Test {
         System.out.println(Str.substring(4, 10) );
     }
 }
+
 ```
 
 输出：
@@ -647,6 +668,7 @@ public class Test {
 ```java
 返回值 :runoob.com
 返回值 :runoob
+
 ```
 
 ## `StringBuffer `和` StringBuilder` 类
@@ -669,12 +691,14 @@ public class Test{
     System.out.println(sBuffer);  
   }
 }
+
 ```
 
 结果
 
 ```java
 菜鸟教程官网：www.runoob.com
+
 ```
 
 ## `StringBuffer` 方法
@@ -717,6 +741,7 @@ String s2 = "abc";
 String s3 = new String("abc");
 System.out.println(s1 == s2);//true
 System.out.println(s1 == s3);//false
+
 ```
 
 `jvm`在运行到字符串字面量时，会从String对象池中查找是否有字符序列相同的对象，如果有，取现成的对象，如果没有，在String对象池中创建一个对象，并返回。使用new String()都是创建一个新对象。
@@ -800,6 +825,7 @@ public class Demo {
     }
 }
 
+
 ```
 
 ![image-20191101191438903](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101191438903.png)
@@ -822,6 +848,7 @@ public class Demo {
 
 ```java
 System.out.println(Charset.defaultCharset());
+
 ```
 
 问题：
@@ -839,7 +866,7 @@ System.out.println(Charset.defaultCharset());
 解决：
 
 1. 如果文件是`UTF-8`编码的，我们使用`-encoding UTF-8 `来显式指定为`UTF-8`的编码格式 
-2.  将文件改为`GBK`编码，如果使用windows自带的记事本，保存为ANSI，中国区域会使用`GBK`编码。如果使用其它高级文本编辑工具，如：`notepad++、Emeditor、UE`这样的，另存为指定格式。 
+2. 将文件改为`GBK`编码，如果使用windows自带的记事本，保存为ANSI，中国区域会使用`GBK`编码。如果使用其它高级文本编辑工具，如：`notepad++、Emeditor、UE`这样的，另存为指定格式。 
 
 ![image-20191101193439769](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101193439769.png)
 
@@ -866,11 +893,13 @@ System.out.println(Charset.defaultCharset());
         this.age=age;
         System.out.println("我是构造函数");
     }
+
 ```
 
 ```java
 Person person0=new Person("lkl",20);`
 Person person1=new Person("zll",19);`
+
 ```
 
 ![image-20191101200435929](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101200435929.png)
@@ -888,6 +917,7 @@ public class Demo {
         System.out.println("我是刘坤龙");
     }
 }
+
 ```
 
 ![image-20191101195929080](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101195929080.png)
@@ -913,6 +943,7 @@ public class Demo {
     public static Person getSuperman() {
         return superman;
     }
+
 ```
 
 ```java
@@ -924,6 +955,7 @@ public static void main(String[] args) {
         System.out.println(p2);
         System.out.println(p3);
     }
+
 ```
 
 ![image-20191101201735320](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101201735320.png)
@@ -952,12 +984,14 @@ class Outer {
         new Inner().print();
     }
 }
+
 ```
 
 ```jaav
  public static void main(String[] args) {
        new Outer().fun();
     }
+
 ```
 
 **输出：**hello
@@ -972,6 +1006,7 @@ class Outer {
 Outer outer=new Outer();
 Outer.Inner inner=outer.new Inner();
 inner.print();
+
 ```
 
 1.先创建外部类实例
@@ -1009,6 +1044,7 @@ static可以声明属性和方法，也可以声明内部类
         this.age=age;
         System.out.println("我是构造函数");
     }
+
 ```
 
 子类
@@ -1021,6 +1057,7 @@ static可以声明属性和方法，也可以声明内部类
         System.out.println("haha");
     }
 }
+
 ```
 
 如果父类构造函数带参数，那必须在子类构造函数中调用以初始化父类属性，而父类中构造函数没有带参数也需要在子类中调用，但不需要显示调用，系统会自动调用
@@ -1034,6 +1071,7 @@ class Boy extends Person {
         System.out.println("haha");
     }
 }
+
 ```
 
 此时父类中的属性以及方法均被子类所继承，但是发现子类能够使用的是所有非private操作，而所有的private操作无法被直接使用，所以称为隐式继承。 
@@ -1053,6 +1091,7 @@ class A{
         System.out.println("3.A类的静态方法");
     }
 }
+
 
 ```
 
@@ -1077,6 +1116,7 @@ public class B extends A {
         System.out.println("8.end.....");
     }
 }
+
 ```
 
 ![image-20191119134411658](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191119134411658.png)
@@ -1104,6 +1144,7 @@ public class B extends A {
 public final void print(){
         System.out.println("输出");
     }
+
 ```
 
 ![image-20191101212048157](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191101212048157.png)
@@ -1138,6 +1179,7 @@ interface  A {
     public static final String NAME="刘坤龙";
     public abstract void print();
 }
+
 ```
 
 可简化为：
@@ -1147,6 +1189,7 @@ interface  A {
     String NAME="刘坤龙";
     void print();
 }
+
 ```
 
 接口里的抽象方法必须定义成public访问权限，这是绝对不可能改变的，在接口中如果不写public权限，则也是public访问权限
@@ -1218,6 +1261,7 @@ public class Demo {
         work.say();
     }
 }
+
 ```
 
 ![image-20191102115904719](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191102115904719.png)
@@ -1229,6 +1273,7 @@ People student=new Student();
 student.say();
 Student stu=new Student();
 stu.sayContent();
+
 ```
 
 不转换为父类的引用也可以获得说话的内容，但抽象类其实是思想的表达，我把我想要得到的动作表示出来，就像这个我想要得到说话的内容，那么你具体的子类就给我去实现，然后我就可以知道我到底是什么身份，我具体的说话内容是什么，向上转型不是必须的，但是一直抽象类思想的体现，而且我们也应该这么做
@@ -1250,6 +1295,7 @@ interface  Msg {
     void info();
     String name="lkl";
 }
+
 ```
 
 ```java
@@ -1259,6 +1305,7 @@ public class My implements Msg {
         System.out.println("我是重写的抽象方法");
     }
 }
+
 ```
 
 ```java
@@ -1271,6 +1318,7 @@ public class Demo {
         System.out.println(Msg.name);
     }
 }
+
 
 ```
 
@@ -1286,6 +1334,7 @@ public class Demo {
 public interface Fruit {
     void whatIm();
 }
+
 ```
 
  具体类 苹果 
@@ -1297,6 +1346,7 @@ public class Apple implements Fruit {
         //苹果
     }
 }
+
 ```
 
  具体类 梨 
@@ -1308,6 +1358,7 @@ public class Pear implements Fruit {
         //梨
     }
 }
+
 ```
 
  具体工厂 水果工厂 
@@ -1326,6 +1377,7 @@ public class FruitFactory {
         return null;
     }
 }
+
 ```
 
  产品使用 
@@ -1334,6 +1386,7 @@ public class FruitFactory {
  FruitFactory mFactory = new FruitFactory();
  Apple apple = (Apple) mFactory.createFruit("apple");//获得苹果
  Pear pear = (Pear) mFactory.createFruit("pear");//获得梨
+
 ```
 
 就这样，一个非常简单的工厂设计模式就完成了，但是有没有发现什么问题呢？
@@ -1368,6 +1421,7 @@ public class Object {
     public final native void notify();
     
     public final native void notifyAll();
+
 ```
 
 **主要方法**
@@ -1378,6 +1432,7 @@ public static void main(String[] args) {
         System.out.println(my);
         System.out.println(my.toString());
     }
+
 ```
 
 ![image-20191106131951868](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191106131951868.png)
@@ -1411,12 +1466,14 @@ public static void main(String[] args) {
 
 ```java
 Integer i = new Integer(10);
+
 ```
 
  从`Java SE5`开始就提供了**自动装箱**的特性，如果生成一个数值为10的Integer对象 
 
 ```java
 Integer i = 10;
+
 ```
 
  这个过程中会自动根据数值创建对应的Integer对象，这就是**装箱**。那么什么是**拆箱**呢，顾名思义，跟装箱对应，就是自动将包装器类型转换为基本数据类型： 
@@ -1424,6 +1481,7 @@ Integer i = 10;
 ```java
 Integer i = 10 //装箱
 int n = i; //拆箱
+
 ```
 
  简单一点说，**装箱就是自动将基本数据类型转换为包装器类型**；**拆箱就是自动将包装器类型转换为基本数据类型**。 
@@ -1447,6 +1505,7 @@ public class Demo {
         System.out.println(i3==i4);
     }
 }
+
 ```
 
 ![image-20191106133857113](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191106133857113.png)
@@ -1494,6 +1553,7 @@ public static Integer valueOf(int i) {
           return IntegerCache.cache[i + (-IntegerCache.low)];
       return new Integer(i);
 }
+
 ```
 
 从源码中我们可以得知，在**通过`valueOf`方法创建`Integer`对象的时候，如果数值在[`-128`,`127`]之间，便返回指向`IntegerCache.cache`中已经存在的对象的引用，否则创建一个新的`Integer`对象**。
@@ -1514,6 +1574,7 @@ public class Demo {
         System.out.println(i3 == i4);
     }
 }
+
 ```
 
 ![image-20191106191100142](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191106191100142.png)
@@ -1534,6 +1595,7 @@ public class Main {
         System.out.println(b3 == b4);
     }
 }
+
 ```
 
 ![image-20191106191345884](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191106191345884.png)
@@ -1545,6 +1607,7 @@ public static final Boolean FALSE = new Boolean(false);
 public static Boolean valueOf(boolean b) {
      return (b ? TRUE : FALSE);
 }
+
 ```
 
 #### 自动装箱与非自动装箱
@@ -1582,6 +1645,7 @@ public static void main(String[] args) {
     System.out.println(g.equals(a + b));//false
     System.out.println(g.equals(a + h));//true
 }
+
 ```
 
 ![image-20191106191909197](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191106191909197.png)
@@ -1597,8 +1661,8 @@ public static void main(String[] args) {
 -  **装箱过程是通过调用包装器的`valueOf`方法实现的，二拆箱是通过调用包装器的`xxxValue`方法实现的**。（`xxx`代表对应的基本数据类型）
 -  **`Integer`、`Short`、`Byte`、`Character`、`Long`**这几个类的**`valueOf`**方法的实现是**类似的**，**`Double`、`Float`**的`valueOf`方法的实现是类似的。**`Boolean`**定义了两个静态常量当做缓存。
 -  `xxxCache`存在的意义：提高效率，避免多次重复创建相同对象了。
-- 当**`==`**运算符的两个操作数**都是包装类的引用时比较的是它们是否指向同一个引用**，而如果**其中有一个操作数是表达式（包含算术运算）则比较的是数值**（即触发自动拆箱的过程）。
-- 对于包装类，**`equals`方法并不会进行类型转换**
+-  当**`==`**运算符的两个操作数**都是包装类的引用时比较的是它们是否指向同一个引用**，而如果**其中有一个操作数是表达式（包含算术运算）则比较的是数值**（即触发自动拆箱的过程）。
+-  对于包装类，**`equals`方法并不会进行类型转换**
 
 #### 包装类的应用
 
@@ -1614,6 +1678,7 @@ public static void main(String[] args) {
         System.out.println("乘法="+i*i);
         System.out.println("加法="+(j+j));
     }
+
 ```
 
 ![image-20191106192729704](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191106192729704.png)
@@ -1672,6 +1737,7 @@ public class Demo {
 }
 
 运行结果：eat something
+
 ```
 
 可以看到，我们用Child继承了Person类，然后实现了Child的一个实例，将其向上转型为Person类的引用
@@ -1710,6 +1776,7 @@ public class Demo {
 }
 
 运行结果：eat something
+
 ```
 
 可以看到，我们直接将抽象类Person中的方法在大括号中实现了
@@ -1749,6 +1816,7 @@ public class Demo {
 }
 
 运行结果：eat something
+
  ```
 
 由上面的例子可以看出，只要一个类是抽象的或是一个接口，那么其子类中的方法都可以使用匿名内部类来实现
@@ -1772,6 +1840,7 @@ public class Demo {
     }
 
 }
+
 ```
 
 ![image-20191106194627755](C:\Users\XZND\AppData\Roaming\Typora\typora-user-images\image-20191106194627755.png)
@@ -1784,6 +1853,7 @@ public class Demo {
 
 ```java
 New A{...}
+
 ```
 
 
