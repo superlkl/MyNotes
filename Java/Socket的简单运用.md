@@ -157,3 +157,126 @@ public class Server {
 1、重新分配一个端口号 (`eg`:端口号：12345)
 2、断开该端口号连接。再重新使用端口号(10000) 
 
+
+
+# UDP发送广播
+
+广播使用的特殊的IP地址：最后一位是255时的IP地址是给广播预留的IP地址，如：192.168.88.255 
+
+udp广播包其实就是往整个局域网内发送udp数据报，而不是单个目的终端。发送udp广播包的时候要记住发送频率，否则很容易形成广播风暴，而导致局域网的网络瘫痪。如果局域网有多个网段，那不同的网段是接收不到其它局域网的广播包的。 
+
+## 广播的实现原理
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191128205701378.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjU3Mzgz,size_16,color_FFFFFF,t_70)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191128205821798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjU3Mzgz,size_16,color_FFFFFF,t_70)
+
+##  UDP的实现 
+
+- **客户端:**
+
+1. 创建用于UDP通信的socket对象---DatagramSocket(用于UDP数据的发送和接收)---数据报套接字
+2.  准备数据,封装包----DatagramPacket(数据包)
+3. 发送数据,通过send方法
+4. 关闭套接字对象--socket对象
+
+- **服务器端: 接收数据**
+
+1. 创建socket套接字对象,并绑定端口号
+2. 创建包对象,创建空数组,准备接收数据
+3. 接收数据
+4. 关闭资源
+
+- **UDP广播方式**
+
+1. 同一网段所有主机都能接收，前提是端口要监听
+2. 客户端发送广播，开启端口监听的服务端接收并打印消息
+3.  广播的实现 :由客户端发出广播，服务器端接收 
+4. String host = "255.255.255.255";  //广播地址--代表所有主机
+5. 10.0.122.255----代表前三个网段是 10.0.122的所有主机 
+
+### 测试一
+
+**接收广播，先运行**
+
+```java
+public class UDPReceiveDemo{
+    public static void main(String[] args) throws IOException {
+        byte[] b=new byte[1024];
+        //创建数据报包准备接收广播信息
+        DatagramPacket dp=new DatagramPacket(b, b.length);
+        MulticastSocket soc=new MulticastSocket(6666);
+        //再多播的时候需要将相关的的IP地址加进来
+        soc.joinGroup(InetAddress.getByName("225.0.0.1"));
+        soc.receive(dp);
+        String s=new String(b,0,dp.getLength());
+        System.out.println("接收方收到的广播信息为： "+s);
+    }
+}
+```
+
+**发送广播，后运行**
+
+```java
+public class UDPSendDemo{
+    public static void main(String[] args) throws IOException {
+        //下面的msg信息可以进行相关的拼接然后实现和feiq通信，只需要按照feiq的相关通信格式即可
+        String msg="这是一条广播消息";
+        InetAddress ips= InetAddress.getByName("225.0.0.1");//前面的地址在广播地址的范围内
+        //创建多播数据报通道
+        MulticastSocket socket=new MulticastSocket();
+        //将IP加入多播组
+        socket.joinGroup(ips);
+        //准备好相应的数据报
+        DatagramPacket dp=new DatagramPacket
+                (msg.getBytes(), msg.getBytes().length,ips,6666
+        );
+        socket.send(dp);
+        socket.close();
+    }
+}
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191128214007830.png)
+
+### 测试二
+
+```java
+public class UdpReceive {
+    public static void main(String[] args)throws Exception
+    {
+        //创建UDP socket，建立端点
+        DatagramSocket ds = new DatagramSocket(20000);	//监听10000端口
+
+        //定义数据包，用于存储数据
+        byte[] buf = new byte[1024];
+        DatagramPacket dp = new DatagramPacket(buf,buf.length);
+
+        ds.receive(dp);
+
+        String ip = dp.getAddress().getHostAddress();	//数据提取
+        String data = new String(dp.getData(),0,dp.getLength());
+        int port = dp.getPort();
+        System.out.println(data+"."+port+".."+ip);
+        ds.close();
+    }
+}
+```
+
+
+
+```java
+public class UdpSend {
+    public static void main(String[] args)throws Exception
+    {
+        DatagramSocket ds  = new DatagramSocket();
+        byte[] buf = "UDP Demo".getBytes();
+        //20000为定义的端口
+        DatagramPacket dp = new DatagramPacket
+                (buf,buf.length, InetAddress.getByName("255.255.255.255"),20000);
+        ds.send(dp);
+        ds.close();
+    }
+}
+```
+
