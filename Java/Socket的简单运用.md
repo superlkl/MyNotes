@@ -6,7 +6,7 @@ socket起源于Unix，而Unix/Linux基本哲学之一就是“一切皆文件”
 
 套接字使用TCP提供了两台计算机之间的通信机制。 客户端程序创建一个套接字，并尝试连接服务器的套接字。
 
-当连接建立时，服务器会创建一个 Socket 对象。<u>客户端和服务器现在可以通过对 Socket 对象的写入和读取来进行通信。</u>
+当连接建立时，服务器会创建一个 Socket 对象。**<u>客户端和服务器现在可以通过对 Socket 对象的写入和读取来进行通信。</u>**
 
 java.net.Socket 类代表一个套接字，并且 java.net.ServerSocket 类为服务器程序提供了一种来监听客户端，并与他们建立连接的机制。
 
@@ -14,10 +14,10 @@ java.net.Socket 类代表一个套接字，并且 java.net.ServerSocket 类为�
 
 - 服务器实例化一个 ServerSocket 对象，表示通过服务器上的端口通信。
 - 服务器调用 ServerSocket 类的 accept() 方法，该方法将一直等待，直到客户端连接到服务器上给定的端口。
-- 服务器正在等待时，一个客户端实例化一个 Socket 对象，<u>指定服务器名称和端口号来请求连接</u>。
+- 服务器正在等待时，一个客户端实例化一个 Socket 对象，**<u>指定服务器名称和端口号来请求连接</u>。**
 - Socket 类的构造函数试图将客户端连接到指定的服务器和端口号。如果通信被建立，则在客户端创建一个 Socket 对象能够与服务器进行通信。
 - 在服务器端，accept() 方法返回服务器上一个新的 socket 引用，该 socket 连接到客户端的 socket。
-- 连接建立后，通过使用 I/O 流在进行通信，<u>每一个socket都有一个输出流和一个输入流，客户端的输出流连接到服务器端的输入流，而客户端的输入流连接到服务器端的输出流</u>。
+- 连接建立后，通过使用 I/O 流在进行通信，**<u>每一个socket都有一个输出流和一个输入流，客户端的输出流连接到服务器端的输入流，而客户端的输入流连接到服务器端的输出流</u>。**
 
 TCP 是一个双向的通信协议，因此数据可以通过两个数据流在同一时间发送.以下是一些类提供的一套完整的有用的方法来实现 socket。
 
@@ -246,7 +246,7 @@ public class UdpReceive {
     public static void main(String[] args)throws Exception
     {
         //创建UDP socket，建立端点
-        DatagramSocket ds = new DatagramSocket(20000);	//监听10000端口
+        DatagramSocket ds = new DatagramSocket(20000);	//监听20000端口
 
         //定义数据包，用于存储数据
         byte[] buf = new byte[1024];
@@ -280,3 +280,143 @@ public class UdpSend {
 }
 ```
 
+ **DatagramSocket其中一个构造函数**
+
+```java
+public DatagramSocket(int port) throws SocketException {
+        this(port, null);
+    }
+```
+
+**DatagramPacket其中一个构造函数**
+
+```java
+  public DatagramPacket(byte buf[], int length,
+                          InetAddress address, int port) {
+        this(buf, 0, length, address, port);
+    }
+```
+
+**分析：**
+
+### InetAddress类
+
+InetAddress类没有构造方法，所以不能直接new出一个对象，但是可以通过InetAddress类的静态方法获得InetAddress的对象；
+
+- **InetAddress.getLocalHost();**
+
+- **InetAddress.getByName("");**
+
+```java
+public class Test {
+    public static void main(String[] args) throws UnknownHostException {
+        //获取本机的InetAddress实例  
+        InetAddress address = InetAddress.getLocalHost();
+
+        System.out.println("计算机名：" + address.getHostName());
+
+        System.out.println("IP地址：" + address.getHostAddress());
+
+        //获取字节数组形式的IP地址
+        byte[] bytes = address.getAddress();
+
+        System.out.println("字节数组形式的IP：" + Arrays.toString(bytes));
+
+        System.out.println("直接输出InetAddress对象："+address);//直接输出InetAddress对象  
+
+        //根据机器名获取InetAddress实例
+        InetAddress address3 = InetAddress.getByName("192.168.43.69");
+
+        System.out.println("计算机名：" + address3.getHostName());
+
+        System.out.println("IP地址：" + address3.getHostName());
+
+    }
+}
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191129164635479.png)
+
+>**String getHostName()：获取InetAddress对象的域名；**
+>
+>**String getHostAddress()：获取InetAddress对象的IP地址；**
+>
+>**getLocalHost()：获得一个InetAddress对象，该对象含有本地机的域名和IP地址。**
+>
+>**InetAddress.getByName("www.163.com")----在给定主机名的情况下确定主机的IP地址** 
+>
+>​                                                                               **----如果参数为null,获得的是本机的IP地址** 
+
+## 数据电报套接字
+
+- **DatagramSocket 和 DatagramPacket 两个类是 基于UDP 协议进行通信的包装类** 
+
+- **实现两个客户端通过 UDP协议通信，使用DatagramSocket 和 DatagramPacket类** 
+
+### 客户端
+
+1.  实例化DatagramSocket类(带上指定端口)，创建客户端 
+2.  准备数据，数据是以字节数组发送的 
+3.  打包数据，使用 DatagramPacket 类 + 服务器地址+ 端口 
+4.  发送数据  关闭连接 
+
+```java
+public class Client {
+    public static void main(String[] args) throws IOException {
+        // 1,创建服务端+端口
+        DatagramSocket client = new DatagramSocket(614);
+
+        // 2,准备数据
+        String msg = "batman，I am you friends！";
+
+        byte [] data = msg.getBytes();
+
+        // 3,打包（发送的地点及端口）
+        DatagramPacket packet = new DatagramPacket(data, data.length, new InetSocketAddress("127.0.0.1", 1219));
+
+        // 4,发送资源
+        client.send(packet);
+        System.out.println("已发送数据包到服务端");
+        // 5,关闭资源
+        client.close();
+    }
+}
+```
+
+### 服务端
+
+1.  实例化DatagramSocket类+指定端口 
+2.  准备接收的字节数组，封装 DatagramPacket 
+3.  接受数据 
+4.  解析数据 
+5.  关闭连接 
+
+```java
+public class Server {
+    public static void main(String[] args) throws IOException {
+        // 1,创建服务端+端口
+        DatagramSocket server = new DatagramSocket(1219);
+
+        System.out.println("等待客户端发送数据");
+        // 2,准备接收容器
+        byte[] container = new byte[1024];
+
+        // 3,封装成包 new DatagramPacket(byte[] b,int length)
+        DatagramPacket packet = new DatagramPacket(container, container.length);
+
+        // 4,接收数据,使用 DatagramSocket的实例的 receive( DatagramPacket ) 方法进行接收
+        server.receive(packet);
+
+        // 5,分析数据
+        byte[] data = packet.getData();
+        int length = packet.getLength();
+        String msg = new String(data, 0, length);
+        System.out.println(msg);
+        server.close();
+    }
+}
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191129171332817.png)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191129172150154.png)
