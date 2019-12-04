@@ -95,7 +95,11 @@ public class SocketClient {
 
 # socket的基本操作 
 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191204134817533.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjU3Mzgz,size_16,color_FFFFFF,t_70)
+
 既然socket是“open—write/read—close”模式的一种实现，那么socket就提供了这些操作对应的函数接口。下面以TCP为例，介绍几个基本的socket接口函数。 
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191204134946950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjU3Mzgz,size_16,color_FFFFFF,t_70)
 
 ## 测试一
 
