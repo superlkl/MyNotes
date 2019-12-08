@@ -1,0 +1,400 @@
+# Map接口
+
+map 即为映射，其提供了两种不同类型的数据对象进行相互关联的能力，类似于数学中的映射关系，一个对一个。比如用映射来储存员工的 ID 和姓名信息，将每个员工的两种信息建立键值对关系，那么在需要获取某个员工的姓名的时候直接通过其 ID 来对映射关系进行查找即可。此时，映射关系中的员工 ID 即为键，姓名为值，两者形成键值对映射关系。
+
+在 Java 中，通过 `Map.Entry` 接口来描述这种类型的元素，我们来看看这个接口在 `Map` 接口中的定义：
+
+## 定义：
+
+```java
+/**
+ * Entry 接口代表一个 key-value 对（键值对），形成的数据结构，即为映射元素，
+ * 这个接口为 Map 接口中的子接口，
+ * 泛型 K 代表键的类型，泛型 V 代表值的类型
+ */
+interface Entry<K,V> {
+    
+    
+    /**
+     * 返回当前键值对中的 键对象，
+     * 如果当前键值对不在对应的 Map 中，抛出一个 IllegalStateException 异常（可选）
+     */
+    K getKey();
+    
+    
+
+    /**
+     * 返回当前键值对中的 值对象，
+     * 如果当前键值对不在对应的 Map 中，抛出一个 IllegalStateException 异常（可选）
+     */
+    V getValue();
+    
+    
+    
+    /**
+     * 设置当前键值对中的 值对象，
+     * 如果设置的值参数对象为 null，抛出一个 NullpointException 异常（可选），
+     * 如果设置的值参数对象不能转换为当前键值对中对应的 值类型，抛出一个 ClassCastException 异常，
+     * 如果当前键值对不在对应的 Map 中，抛出一个 IllegalStateException 异常（可选）
+     */
+    V setValue(V value);
+    
+    
+
+    /**
+     * 如果参数对象和当前键值对等价，那么返回 true，否则返回 false，一般可以通过以下代码实现：
+     * <pre>
+     *     (e1.getKey()==null ?
+     *      e2.getKey()==null : e1.getKey().equals(e2.getKey())) &&
+     *     (e1.getValue()==null ?
+     *      e2.getValue()==null : e1.getValue().equals(e2.getValue()))
+     * </pre>
+     */
+    boolean equals(Object o);
+    
+    
+
+    /**
+     * 返回当前键值对的 hashCode ，用于 Map 中形成数组下标值，一般可以通过以下代码实现：
+     * <pre>
+     *     (e.getKey()==null   ? 0 : e.getKey().hashCode()) ^
+     *     (e.getValue()==null ? 0 : e.getValue().hashCode())
+     * </pre>
+     * 设计 hashCode 方法时，确保当两个对象的 equals 方法返回 true 时，
+     * 这两个对象的 hashCode 方法返回值相同
+     */
+    int hashCode();
+
+    // ......
+}
+```
+
+这个接口提供了一些方法，用于描述一个 `键值对` 的行为，即通过这些方法来获取 / 设置键值对的相关信息。
+而在 `Map（HashMap、LinkedHashMap…）` 中正是通过实现了这个接口的类对象来储存键值对的信息。
+
+
+
+## `Map` 接口中的常用方法：
+
+```java
+public interface Map<K,V> {
+
+    /**
+     * 返回当前映射的元素数量，不大于 Integer.MAX_VALUE
+     */
+    int size();
+
+    /**
+     * 判断当前映射是否为空并返回结果
+     */
+    boolean isEmpty();
+
+    /**
+     * 判断参数所代表的键是否存在当前映射的键值对元素中，
+     * key 允许为 null（某些映射例如 HashMap 允许键为 null），
+     * 对于 key 不为 null 的情况，通过 equals 方法来判断键是否等价，
+     */
+    boolean containsKey(Object key);
+
+    /**
+     * 判断参数所代表的键是否存在当前映射的键值对元素中，
+     * value 允许为 null（某些映射例如 HashMap 允许值为 null），
+     * 对于 value 不为 null 的情况，通过 equals 方法来判断值是否等价，
+     */
+    boolean containsValue(Object value);
+
+    /**
+     * 获取键所对应的值对象，对于 null，不同的 Map 实现类有不同的处理方式
+     */
+    V get(Object key);
+
+    /**
+     * 在映射中插入新的关系，如果 key 已经在映射中某个 Entry 对象中存在（等价），
+     * 那么相当于更新 key 所对应的 value 对象，对于 null，不同的 Map 实现类有不同的处理方式
+     */
+    V put(K key, V value);
+
+    /**
+     * 移除参数所对应的的键值对映射关系，返回移除的映射关系中的值，
+     * 如果 key 在当前映射中不存在，则返回 null，
+     * 对于 key 为 null 的情况，不同的 Map 实现类有不同的处理方法
+     */
+    V remove(Object key);
+
+    /**
+     * 将参数所代表的映射关系复制一份到当前的映射中，
+     * 等价于对于每一个 m 中的映射键值对关系，
+     * 调用当前映射的 put(key, value) 方法（key、value 都是 m 中的键、值）
+     */
+    void putAll(Map<? extends K, ? extends V> m);
+
+    /**
+     * 清除当前映射中的所有键值对对应关系
+     */
+    void clear();
+
+    /**
+     * 返回一个包含了当前映射中所有的键对象的集合类型对象
+     */
+    Set<K> keySet();
+
+    /**
+     * 返回一个包含了当前映射中所有的值对象的集合对象
+     */
+    Collection<V> values();
+
+    /**
+     * 返回一个包含了所有键值对对象的集合类型对象，
+     * 通过 for each 语句或者迭代器来遍历集合类型对象，
+     * 从而完成对当前映射中所有键值对元素的遍历
+     */
+    Set<Map.Entry<K, V>> entrySet();
+
+
+    /**
+     * 调用这个方法，可以用类似于 foreach 语句的形式来遍历当前映射对象中的每一个键值对
+     * 方法内部还是通过遍历当前映射对的 entry 集合来实现遍历映射中的所有键值对
+     * @since 1.8
+     */
+    default void forEach(BiConsumer<? super K, ? super V> action) {
+        Objects.requireNonNull(action);
+        for (Map.Entry<K, V> entry : entrySet()) {
+            K k;
+            V v;
+            try {
+                k = entry.getKey();
+                v = entry.getValue();
+            } catch(IllegalStateException ise) {
+                // this usually means the entry is no longer in the map.
+                throw new ConcurrentModificationException(ise);
+            }
+            action.accept(k, v);
+        }
+    }
+
+    // ......
+
+    /**
+     * 移除映射中键、值分别和参数 key、value 等价的键值对，等价于调用以下代码：
+     * <pre> {@code
+     * if (map.containsKey(key) && Objects.equals(map.get(key), value)) {
+     *     map.remove(key);
+     *     return true;
+     * } else
+     *     return false;
+     * }</pre>
+     * @since 1.8
+     */
+    default boolean remove(Object key, Object value) {
+        Object curValue = get(key);
+        if (!Objects.equals(curValue, value) ||
+            (curValue == null && !containsKey(key))) {
+            return false;
+        }
+        remove(key);
+        return true;
+    }
+
+    /**
+     * 将映射中 key、oldValue 所在的键值对中的值替换为 newValue，
+     * 如果替换成功，返回 true，否则返回 false
+     * @since 1.8
+     */
+    default boolean replace(K key, V oldValue, V newValue) {
+        Object curValue = get(key);
+        if (!Objects.equals(curValue, oldValue) ||
+            (curValue == null && !containsKey(key))) {
+            return false;
+        }
+        put(key, newValue);
+        return true;
+    }
+
+    /**
+     * 将映射中 key 所在的键值对中的值替换为 value，
+     * 如果 key 不在映射的键值对关系中，那么返回 null
+     * @since 1.8
+     */
+    default V replace(K key, V value) {
+        V curValue;
+        if (((curValue = get(key)) != null) || containsKey(key)) {
+            curValue = put(key, value);
+        }
+        return curValue;
+    }
+
+    // ...... 
+}
+```
+
+
+
+## 1. `keySet()`
+
+`keySet()`返回的是map对象的key值的set集合
+
+```java
+public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("01", "lkl");
+        map.put("02", "zll");
+        map.put("03", "gcx");
+        // 先获取map集合的所有键的set集合，即为map中所有key值得集合
+        Set<String> keySet = map.keySet();
+        // 有了set集合，就可以获取其迭代器
+        Iterator<String> it = keySet.iterator();
+        while (it.hasNext()) {
+            String key = it.next();
+            // 有了键可以通过map集合的get方法获取其对应的值
+            String value = map.get(key);
+            // 获得key和value值
+            System.out.println("key:" + key + "-->value:" + value);
+        }
+    }
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019120813413084.png)
+
+## 2. `entrySet()`
+
+`entrySet()`返回映射所包含的映射关系的Set集合（一个关系就是一个键-值对），就是把(key-value)作为一个整体一对一对地存放到Set集合当中的。[entry：进入，入口]
+
+```java
+ public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("01", "lkl");
+        map.put("02", "zll");
+        map.put("03", "gcx");
+        // 通过entrySet()方法将map集合中的映射关系取出（这个关系就是Map.Entry类型）
+        Set<Map.Entry<String, String>> entrySet = map.entrySet();
+        // 将关系集合entrySet进行迭代，存放到迭代器中
+        Iterator<Map.Entry<String, String>> it2 = entrySet.iterator();
+        while (it2.hasNext()) {
+            // 获取Map.Entry关系对象me
+            Map.Entry<String, String> me = it2.next();
+            // 通过关系对像获取key
+            String key2 = me.getKey();
+            // 通过关系对像获取value
+            String value2 = me.getValue();
+            System.out.println("key:" + key2 + "-->value:" + value2);
+        }
+    }
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019120813413084.png)
+
+## 3.总结
+
+虽然使用`keySet`及`entrySet`来进行遍历能取得相同的结果，但两者的遍历速度是有差别的
+
+- `keySet()`:迭代后只能通过get()取key；再根据key值取value。
+- `entrySet()`：迭代后可以`e.getKey()`，`e.getValue()`取key和value。
+
+同时，`keySet()`的速度比`entrySet()`慢了很多，也就是`keySet`方式遍历Map的性能不如`entrySet`性能好
+为了提高性能，以后多考虑用`entrySet()`方式来进行遍历。
+
+
+
+# 二、Map.Entry
+
+- Map是java中的接口，Map.Entry是Map的一个内部接口。
+- Map提供了一些常用方法，如keySet()、entrySet()等方法，keySet()方法返回值是Map中key值的集合；entrySet()的返回值也是返回一个Set集合，此集合的类型为Map.Entry。
+- Map.Entry是Map声明的一个内部接口，此接口为泛型，定义为Entry<K,V>。它表示Map中的一个实体（一个key-value对）。接口中有getKey(),getValue方法。
+- 遍历Map对象的常用方法除了以上两种外，还有一种是单纯的遍历value值。Map有一个values方法，返回的是value的Collection集合。通过遍历Collection也可以遍历value。
+
+```java
+public static void main(String[] args) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("01", "lkl");
+        map.put("02", "zll");
+        map.put("03", "gcx");
+		// 创建一个Collection集合，存放map的value值
+		Collection<String> c = map.values();
+		// 通过遍历Collection也可以遍历value
+		Iterator<String> it = c.iterator();
+		// 该方法只能遍历value值，不能遍历key值
+		while (it.hasNext()) {
+			Object value = it.next();
+			System.out.println("value:" + value);
+		}
+	}
+```
+
+在遍历Map对象时，先从Map对象中取出key值之后，还必须每次重复返回到Map中取得相对的值，这是很繁琐和费时的。
+
+幸运的是，Map类提供了一个称为entrySet()的方法，这个方法返回一个Map.Entry实例化后的对象集。 接着，Map.Entry类提供了一个getKey()方法和一个getValue()方法。
+
+```java
+  public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("01", "lkl");
+        map.put("02", "zll");
+        map.put("03", "gcx");
+        Set entries = map.entrySet( );
+        Iterator iterator = entries.iterator( );
+        while(iterator.hasNext( )) {
+            Map.Entry entry = (Map.Entry) iterator.next( );
+            Object key = entry.getKey( );
+            Object value = entry.getValue();
+            System.out.println("key:" + key + "-->value:" + value);
+        }
+    }
+```
+
+尽管增加了一行代码，我们却省略了许多对Map不必要的“get”调用。同时，提供给开发人员一个同时保持了关键字和其对应的值的类。Map.Entry同时也提供了一个setValue（）方法，程序员可以使用它修改map里面的值。
+
+
+
+## 测试
+
+```java
+public static void main(String[] args) {
+        /**
+         * Map是java中的接口，Map.Entry是Map的一个内部接口。
+         *
+         *
+         * Map提供了一些常用方法，如keySet()、entrySet()等方法。
+         *
+         *
+         * keySet()方法返回值是Map中key值的集合；entrySet()的返回值也是返回一个Set集合，此集合的类型为Map.Entry。
+         *
+         *
+         * Map.Entry是Map声明的一个内部接口，此接口为泛型，定义为Entry<K,V>。它表示Map中的一个实体（一个key-value对）。接口中有getKey(),getValue方法。
+
+         */
+
+        Map<String, String> map = new HashMap<>();
+        map.put("key1", "value1");
+        map.put("key2", "value2");
+        map.put("key3", "value3");
+
+        //第一种：普遍使用，二次取值
+        System.out.println("通过Map.keySet遍历key和value：");
+        for (String key : map.keySet()) {
+            System.out.println("key= "+ key + " and value= " + map.get(key));
+        }
+
+        //第二种
+        System.out.println("通过Map.entrySet使用iterator遍历key和value：");
+        Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> entry = it.next();
+            System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+        }
+
+        //第三种：推荐，尤其是容量大时</span>
+        System.out.println("通过Map.entrySet遍历key和value");
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue());
+        }
+
+        //第四种
+        System.out.println("通过Map.values()遍历所有的value，但不能遍历key");
+        for (String v : map.values()) {
+            System.out.println("value= " + v);
+        }
+}
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191208132617120.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0MjU3Mzgz,size_16,color_FFFFFF,t_70)
+
