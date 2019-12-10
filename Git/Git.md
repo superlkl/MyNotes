@@ -48,7 +48,22 @@ git commit -m "xxxx"
 git push
 ```
 
+- 第四种方式
 
+工具：Typora+Github
 
-![image-20191208173505364](Git.assets/image-20191208173505364.png)
+原因：Typora专注笔记，TOC目录，默认样式好看等优点，让我选择了他，那现在要解决的问题是图片上传和云笔记的问题了。
 
+(1）图片上传：打开Typora，文件→偏好设置，打开即看到如下界面，按照下面的配置设置，一定要选择“复制图片到./assets文件夹“哦，后面结合github才能完成图片上传功能，否则，你的图片地址，就会是绝对路径，而非相对路径！！
+
+![img](https://img-blog.csdnimg.cn/20181203152604998.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4MDU2NzA0,size_16,color_FFFFFF,t_70)
+
+设置完后，现在，请你复制一张图片，图片会存储在assets文件夹下
+
+![img](https://img-blog.csdnimg.cn/2018120315385532.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4MDU2NzA0,size_16,color_FFFFFF,t_70)
+
+云笔记：
+
+下载Git，在保存笔记的地方建立仓库，上传到Github
+
+其实图片正常显示的原因，是因为我们把assert文件夹也提交到github了，Typora复制图片使用了相对路径，所以能正常找到图片。至此，问题都解决了。
