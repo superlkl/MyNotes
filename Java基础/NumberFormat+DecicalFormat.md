@@ -308,9 +308,10 @@ static BigDecimal valueOf(double d); //常用,推荐使用
 ![image-20191211214409540](常用类库三.assets/image-20191211214409540.png)
 
 **※ 注意：**
-1）System.out.println()中的数字默认是double类型的，double类型小数计算不精准。
 
-2）使用BigDecimal类构造方法传入double类型时，计算的结果也是不精确的！
+1. System.out.println()中的数字默认是double类型的，double类型小数计算不精准。
+
+2. 使用BigDecimal类构造方法传入double类型时，计算的结果也是不精确的！
 
 因为不是所有的浮点数都能够被精确的表示成一个double 类型值，有些浮点数值不能够被精确的表示成 double 
 
