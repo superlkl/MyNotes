@@ -26,7 +26,7 @@
     }
 ```
 
-![image-20191215214836699](Java网络编程.assets/image-20191215214836699.png)
+![image-20191215214836699](Java网络.assets/image-20191215214836699.png)
 
 # InetAddress类的总结
 
@@ -36,7 +36,7 @@
 
    -  `InetAddress.getLocalHost()`;
 
-   - `InetAddress.getByName("")`;
+   -  `InetAddress.getByName("")`;
 
 2. 获取本机的`InetAddress`实例 
 
@@ -55,7 +55,7 @@
     }
 ```
 
-![image-20191215215514684](Java网络编程.assets/image-20191215215514684.png)
+![image-20191215215514684](Java网络.assets/image-20191215215514684.png)
 
 3. 根据机器名获取`InetAddress`实例  
 
@@ -70,7 +70,7 @@
     }
 ```
 
-![image-20191215215909990](Java网络编程.assets/image-20191215215909990.png)
+![image-20191215215909990](Java网络.assets/image-20191215215909990.png)
 
 为什么`address.getHostName()`输出的是`IP`地址，而没有输出电脑的名字？
 
@@ -92,21 +92,84 @@
     }
 ```
 
-![image-20191215221035337](Java网络编程.assets/image-20191215221035337.png)
+![image-20191215221035337](Java网络.assets/image-20191215221035337.png)
 
 输出：
 
-![image-20191215221016234](Java网络编程.assets/image-20191215221016234.png)
+![image-20191215221016234](Java网络.assets/image-20191215221016234.png)
 
 # URLConnection类
 
+`URLConnection`是封装访问远程网络资源的一般方法的类，通过他可以建立与远程服务器的连接，检查远程资源的一些属性
+
+URLConnection是一个抽象类，表示指向URL指定资源的活动连接。
+
+URLConnection类本身依赖于Socket类实现网络连接。一般认为，URLConnection类提供了比Socket类更易于使用、更高级的网络连接抽象。但实际上，大多数程序员都会忽略它。因为URLConnection太贴近HTTP协议。它假定传输的内容前面都有MIME首部或类似的东西。但大多数协议（如FTP和SMTP）并不使用MIME首部。
+
+URLConnection类声明为抽象类，除了connect()方法，其他方法都已经实现。URLConnection的三个实现子类都位于sun.net.www包下。
+
+URLConnection类的保护类型的构造方法：
+
+```java
+protected URLConnection(URL url)
+```
+
+构造一个到指定 URL 的 URL 连接。
 
 
 
+connect()方法由子类实现本地与服务器的连接方式。一般使用TCP socket，但也可以使用其他其他机制来建立。
+
+```java
+abstract void connect()
+```
+
+打开到此 URL 引用的资源的通信链接（如果尚未建立这样的连接）。
+
+ 当派生URLConnection子类时，通常会覆盖URLConnection的其他方法，使其返回有意义的值。
+
+**例：获URLConnection实例对象。**
+
+```java
+public class Test {
+    public static void main(String[] args) throws Exception{
+            URL url = new URL("http://www.baidu.com");
+            URLConnection uc = url.openConnection();
+            System.out.println(uc);
+        System.out.println("内容大小："+uc.getContentLength());
+        System.out.println("连接类型："+uc.getContentType());
+    }
+}
+```
+
+![image-20191221104616062](Java网络.assets/image-20191221104616062.png)
 
 # URLEncoder类和URLDecoder类
 
+在使用URL访问的时候经常会看见地址后面有很多其他的附带信息，例如在我的github里我找我的总结博客
 
+```java
+https://github.com/superlkl/MyNotes/blob/master/Reading-Note/%E6%80%BB%E7%BB%93.md
+```
 
-# TCP程序设计
+总结两个字没有显示出来，而是转换成了`%E6%80%BB%E7%BB%93`这堆字符
 
+对于英文单词可以正常显示，但是对于其中的中文的话，则会进行一系列的编码操作，在Java中如果想要完成这样的编码和解码操作就必须使用这个两个类，`URLEncoder`可以为传递的内容进行编码，而`URLDecoder`则对应着为传递的内容解码
+
+测试
+
+```java
+ public static void main(String[] args) {
+        String str="刘坤龙";
+        //进行编码
+        String encode= URLEncoder.encode(str, StandardCharsets.UTF_8);
+        System.out.println("编码之后的内容："+encode);
+        //进行解码
+        String decode=URLDecoder.decode(encode, StandardCharsets.UTF_8);
+        System.out.println("解码之后的内容："+decode);
+    }
+```
+
+![image-20191221110211294](Java网络.assets/image-20191221110211294.png)
+
+上面程序将内容通过URLEncoder编码成UTF-8的形式，然后再通过URLDecoder按照UTF-8进行解码
