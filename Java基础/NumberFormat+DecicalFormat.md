@@ -24,11 +24,7 @@ public static void main(String[] args) {
 
 # DecimalFormat
 
-DecimalFormat也是Format的一个子类，主要的作用是用来格式化数字使用，当然，在格式化数字的时候要比直
-
-接使用NumberFormat更加方便，因为可以直接指定按用户自定义的方式进行格式化操作，与SimpleDateFormat
-
-类似，如果要想进行自定义格式化操作，则必须指定格式化操作的模板。
+DecimalFormat也是Format的一个子类，主要的作用是用来格式化数字使用，当然，在格式化数字的时候要比直接使用NumberFormat更加方便，因为可以直接指定按用户自定义的方式进行格式化操作，与SimpleDateFormat类似，如果要想进行自定义格式化操作，则必须指定格式化操作的模板。
 
 | **No.** | **标记** | **位置**   | **描述**                                                     |
 | ------- | -------- | ---------- | ------------------------------------------------------------ |
@@ -261,7 +257,7 @@ BigDecimal BigDecimal(String s); //常用,推荐使用
 static BigDecimal valueOf(double d); //常用,推荐使用
 ```
 
-```
+```java
  public static void main(String[] args) {
         BigDecimal num1 = new BigDecimal(0.005);
         BigDecimal num2 = new BigDecimal(1000000);
