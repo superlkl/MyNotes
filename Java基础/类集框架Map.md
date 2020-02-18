@@ -239,7 +239,7 @@ public static void main(String[] args) {
         map.put("01", "lkl");
         map.put("02", "zll");
         map.put("03", "gcx");
-        // 先获取map集合的所有键的set集合，即为map中所有key值得集合
+        // 先获取map集合的所有键的set集合，即为map中所有key值的集合
         Set<String> keySet = map.keySet();
         // 有了set集合，就可以获取其迭代器
         Iterator<String> it = keySet.iterator();
@@ -295,11 +295,11 @@ public static void main(String[] args) {
 
 
 
-# 二、Map.Entry
+# 二、`Map.Entry`
 
-- Map是java中的接口，Map.Entry是Map的一个内部接口。
-- Map提供了一些常用方法，如keySet()、entrySet()等方法，keySet()方法返回值是Map中key值的集合；entrySet()的返回值也是返回一个Set集合，此集合的类型为Map.Entry。
-- Map.Entry是Map声明的一个内部接口，此接口为泛型，定义为Entry<K,V>。它表示Map中的一个实体（一个key-value对）。接口中有getKey(),getValue方法。
+- Map是Java中的接口，`Map.Entry`是Map的一个内部接口。
+- Map提供了一些常用方法，如`keySet()`、`entrySet()`等方法，`keySet()`方法返回值是Map中key值的集合；`entrySet()`的返回值也是返回一个Set集合，此集合的类型为`Map.Entry`。
+- `Map.Entry`是Map声明的一个内部接口，此接口为泛型，定义为Entry<K,V>。它表示Map中的一个实体（一个key-value对）。接口中有`getKey()`,`getValue`方法。
 - 遍历Map对象的常用方法除了以上两种外，还有一种是单纯的遍历value值。Map有一个values方法，返回的是value的Collection集合。通过遍历Collection也可以遍历value。
 
 ```java
@@ -322,7 +322,7 @@ public static void main(String[] args) {
 
 在遍历Map对象时，先从Map对象中取出key值之后，还必须每次重复返回到Map中取得相对的值，这是很繁琐和费时的。
 
-幸运的是，Map类提供了一个称为entrySet()的方法，这个方法返回一个Map.Entry实例化后的对象集。 接着，Map.Entry类提供了一个getKey()方法和一个getValue()方法。
+幸运的是，Map类提供了一个称为`entrySet()`的方法，这个方法返回一个`Map.Entry`实例化后的对象集。 接着，`Map.Entry`类提供了一个`getKey()`方法和一个`getValue()`方法。
 
 ```java
   public static void main(String[] args) {
@@ -341,7 +341,7 @@ public static void main(String[] args) {
     }
 ```
 
-尽管增加了一行代码，我们却省略了许多对Map不必要的“get”调用。同时，提供给开发人员一个同时保持了关键字和其对应的值的类。Map.Entry同时也提供了一个setValue（）方法，程序员可以使用它修改map里面的值。
+尽管增加了一行代码，我们却省略了许多对Map不必要的“get”调用。同时，提供给开发人员一个同时保持了关键字和其对应的值的类。`Map.Entry`同时也提供了一个`setValue（）`方法，程序员可以使用它修改map里面的值。
 
 
 

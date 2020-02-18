@@ -223,6 +223,15 @@ System.out.println(Math.ceil(a / (float)b));  // 2 表达式B(正确使用)
 ## 3.随机数
 
 - `Math.random()`: 取得一个[0, 1)范围内的随机数
+- 公式：`Math.random()*(n-m)+m`，生成大于等于m小于n的随机数；
+- 例如：定义一个随机1到5(取不到5)的变量 [1,5)
+
+```java
+int number=(int)(Math.random()*(5-1)+1)；
+int number = (int)(Math.random()*4+1)；取值正好是[1,5)
+```
+
+**测试：**
 
 ```java
  public static void main(String[] args) {
@@ -244,13 +253,11 @@ System.out.println(Math.ceil(a / (float)b));  // 2 表达式B(正确使用)
 
 仔细想一想其实并不是很复杂：`Math.random()`的取值应该是0-1（事实上取不到0和1）之间的随机小数，乘以8
 
-之后应该是0-8之间的随机小数，也就是0.到7.之间的小数（大于0而小于8），经过int类型转换之后，应该是0-7之
-
-间的随机整数，所以"+1"之后就会得到1－8之间的
+之后应该是0-8之间的随机小数，也就是0.到7.之间的小数（大于0而小于8），经过int类型转换之后，系统默认向下取整，应该是0-7之间的随机整数，所以"+1"之后就会得到1－8之间的
 
 # Random类
 
-java中存在两个随机函数，它们分别来自java.long.Math.random()和   java.util.Random();其中前者的适用范围比较小，完全可以被后者取代。
+Java中存在两个随机函数，它们分别来自`java.long.Math.random()`和   `java.util.Random();`其中前者的适用范围比较小，完全可以被后者取代。
 
 在Random类中有两种构造方法
 
