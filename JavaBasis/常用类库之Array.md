@@ -247,5 +247,3 @@ System.out.println(Arrays.toString(data)); // [1, 2, 3]
 ## deepToString
 
 返回多维数组元素的字符串形式
-
-# 
