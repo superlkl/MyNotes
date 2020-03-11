@@ -27,7 +27,7 @@
 
 
 - Alt+Enter 智能修复
-- Alt+Ibster 生成构造器/Getter/Setter
+- Alt+Insertr 生成构造器/Getter/Setter
 - Alt+Shift+up and Alt+Shift+down 上下移动行
 
 
