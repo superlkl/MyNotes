@@ -27,8 +27,6 @@
 - Java设计模式-单例模式Java设计模式-工厂模式
 - Java中动态代理（基于接口和基于子类）
 
-
-
 # 二、Java数据库
 - SQL语句基本用法
 - Java-JDBC开发-连接数据库Java-JDBC开发-SQL注入攻击和解决方案
@@ -38,8 +36,6 @@
 - 【Redis缓存】- 入门——Redis介绍和环境搭建
 - 【Redis缓存】- Redis数据结构、基本命令操作、持久化
 - 【Redis缓存】- Java客户端Jedis
-
-
 
 # 三、JavaWeb
 
@@ -85,8 +81,6 @@
 
 - IntelliJ IDEA 集成 maven 开发环境搭建+创建Maven项目详细步骤
 
-  
-
   # 四、主流框架
 
 - MyBatis 框架基本使用
@@ -100,8 +94,6 @@
 - SpringBoot 原理分析【SpringBoot 框架】- SpringBoot 配置文件
 
 - 【SpringBoot 框架】- SpringBoot 整合 Mybatis、Junit、Redis
-
-  
 
   # 五、环境搭建及工具使用
 
